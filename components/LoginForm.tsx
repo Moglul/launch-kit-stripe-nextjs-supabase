@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { ForgotPasswordModal } from './ForgotPasswordModal';
 import Image from 'next/image';
+import Logo from './Logo';
 
 interface LoginFormProps {
   onSubmit: (email: string, password: string, isSignUp: boolean) => Promise<void>;
@@ -28,18 +29,16 @@ export function LoginForm({
   };
 
   return (
-    <div className="w-full space-y-8 p-8 bg-surface-light dark:bg-surface-dark rounded-2xl shadow-subtle border border-gray-200 dark:border-gray-700">
-      <div className="text-center">
+    <div className="w-full space-y-8 p-8 bg-white/95 dark:bg-neutral-darker/95 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 transition-all duration-300">
+            <div className="text-center">
         <div className="flex items-center justify-center gap-2 mb-6">
-          <span className="text-3xl">🎬</span>
-          <h2 className="text-2xl font-medium text-text dark:text-text-dark">
-            NextTemp
-          </h2>
+          <Logo />
         </div>
       </div>
+      
 
       {error && (
-        <div className="text-red-500 text-center">
+        <div className="text-red-500 text-center bg-red-50 dark:bg-red-900/30 p-4 rounded-lg">
           {error}
         </div>
       )}
@@ -47,7 +46,7 @@ export function LoginForm({
       <div className="mt-6 space-y-4">
         <button
           onClick={onGoogleSignIn}
-          className="w-full py-2.5 px-4 border border-gray-200 dark:border-gray-700 rounded-full shadow-subtle text-text dark:text-text-dark bg-surface-light dark:bg-surface-dark hover:bg-neutral dark:hover:bg-neutral-dark transition-all flex items-center justify-center"
+          className="w-full py-2.5 px-4 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-sm text-zinc-900 dark:text-white bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all flex items-center justify-center"
         >
           <Image
             src="/Google-Logo.png"
@@ -60,14 +59,14 @@ export function LoginForm({
         </button>
 
         <div className="flex items-center my-6">
-          <div className="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
-          <span className="mx-4 text-sm text-gray-500 dark:text-gray-400">OR</span>
-          <div className="flex-grow border-t border-gray-300 dark:border-gray-700"></div>
+          <div className="flex-grow border-t border-slate-200 dark:border-slate-700"></div>
+          <span className="mx-4 text-sm text-slate-500 dark:text-slate-400">OR</span>
+          <div className="flex-grow border-t border-slate-200 dark:border-slate-700"></div>
         </div>
       </div>
 
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
           {isSignUp ? 'Create an account' : 'Are you an Email User?'}
         </h2>
       </div>
@@ -79,14 +78,14 @@ export function LoginForm({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email address"
-            className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+            className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-slate-200 dark:border-slate-700 placeholder-slate-500 dark:placeholder-slate-400 text-slate-900 dark:text-white bg-white dark:bg-neutral-darker focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-zinc-900 dark:focus:ring-zinc-100 dark:focus:border-zinc-100 transition-all"
           />
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
-            className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+            className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-slate-200 dark:border-slate-700 placeholder-slate-500 dark:placeholder-slate-400 text-slate-900 dark:text-white bg-white dark:bg-neutral-darker focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-zinc-900 dark:focus:ring-zinc-100 dark:focus:border-zinc-100 transition-all"
           />
         </div>
 
@@ -94,7 +93,7 @@ export function LoginForm({
           <button
             type="button"
             onClick={() => setIsForgotPasswordOpen(true)}
-            className="text-sm text-primary hover:text-primary-dark transition-colors"
+            className="text-sm text-zinc-900 hover:text-zinc-800 dark:text-white dark:hover:text-zinc-200 transition-colors"
           >
             Forgot your password?
           </button>
@@ -108,7 +107,7 @@ export function LoginForm({
         <button 
           type="submit" 
           disabled={isLoading}
-          className="w-full py-2.5 px-4 border border-transparent rounded-full shadow-sm text-white bg-primary hover:bg-primary-dark disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all"
+          className="w-full py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-white bg-zinc-900 hover:bg-zinc-800 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:ring-offset-2 transition-all"
         >
           {isSignUp ? 'Sign up' : 'Sign in'} with Email
         </button>
@@ -117,7 +116,7 @@ export function LoginForm({
           <button
             type="button"
             onClick={() => setIsSignUp(!isSignUp)}
-            className="text-primary hover:text-primary-dark transition-colors"
+            className="text-zinc-900 hover:text-zinc-800 dark:text-white dark:hover:text-zinc-200 transition-colors"
           >
             {isSignUp ? 'Already have an account? Sign in' : 'Need an account? Sign up'}
           </button>

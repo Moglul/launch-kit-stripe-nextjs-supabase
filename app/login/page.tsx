@@ -28,7 +28,6 @@ export default function LoginPage() {
         const { data, error } = await signUpWithEmail(email, password);
         if (error) throw error;
         
-        // Check if the user needs to verify their email
         if (data?.user && !data.user.email_confirmed_at) {
           router.replace(`/verify-email?email=${encodeURIComponent(email)}`);
           return;
@@ -48,18 +47,15 @@ export default function LoginPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-foreground">Loading...</div>
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#0B1120]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex mt-20 justify-center bg-background px-4">
-      <div className="w-full max-w-md">
-        {/* <h1 className="text-4xl font-bold text-center mb-8 text-primary dark:text-white">
-          NextTemp
-        </h1> */}
+    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#0B1120] px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-8">
         <LoginForm
           onSubmit={handleSubmit}
           onGoogleSignIn={signInWithGoogle}
@@ -69,4 +65,4 @@ export default function LoginPage() {
       </div>
     </div>
   );
-} 
+}

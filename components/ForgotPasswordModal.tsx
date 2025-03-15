@@ -46,7 +46,7 @@ export function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordModalProp
             </p>
             <button
               onClick={onClose}
-              className="w-full py-2 px-4 bg-primary-darker text-white rounded-lg hover:bg-blue-700"
+              className="w-full py-2 px-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg transition-all"
             >
               Close
             </button>
@@ -65,7 +65,7 @@ export function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordModalProp
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary dark:bg-gray-700 dark:border-gray-600"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-900 focus:ring-zinc-900 dark:focus:border-zinc-100 dark:focus:ring-zinc-100 dark:bg-gray-700 dark:border-gray-600"
                 required
               />
             </div>
@@ -80,7 +80,7 @@ export function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordModalProp
               <button
                 onClick={handleResetPassword}
                 disabled={isLoading}
-                className="py-2 px-4 bg-primary-darker text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                className="py-2 px-4 bg-zinc-900 text-white rounded-lg hover:bg-zinc-800 disabled:opacity-50 transition-all"
               >
                 {isLoading ? 'Sending...' : 'Send Reset Link'}
               </button>
@@ -90,4 +90,4 @@ export function ForgotPasswordModal({ isOpen, onClose }: ForgotPasswordModalProp
       </div>
     </div>
   );
-} 
+}

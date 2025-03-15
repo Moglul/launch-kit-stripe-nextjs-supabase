@@ -10,7 +10,7 @@ import {
 } from '@supabase/supabase-js';
 
 interface AuthContextType {
-  user: User | null;
+  user: (User & { company_id?: string }) | null;
   session: Session | null;
   isLoading: boolean;
   supabase: SupabaseClient;
@@ -41,7 +41,7 @@ interface SubscriptionPayload {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<(User & { company_id?: string }) | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubscriber, setIsSubscriber] = useState(false);
 
@@ -85,7 +85,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setIsLoading(true);
         console.log("AuthContext - Starting Try in InitializeAuth!");
 
-        // // First, get initial session
         const { data: { session }, error } = await supabase.auth.getSession();
         
         if (error || !mounted) {
@@ -93,23 +92,43 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           return;
         }
 
-        // Update initial state
-        setSession(session);
+        // Update initial state with company_id
         const currentUser = session?.user ?? null;
-        setUser(currentUser);
+        if (currentUser) {
+          const { data: userData } = await supabase
+            .from('users')
+            .select('company_id')
+            .eq('id', currentUser.id)
+            .single();
+          
+          setUser(userData ? { ...currentUser, company_id: userData.company_id } : currentUser);
+        } else {
+          setUser(null);
+        }
+        setSession(session);
 
         if (currentUser) {
           await checkSubscription(currentUser.id);
         }
         
-        // Then set up listener for future changes
+        // Set up listener for future changes with company_id
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
           async (_event, newSession) => {
             if (!mounted) return;
             
             const newUser = newSession?.user ?? null;
+            if (newUser) {
+              const { data: userData } = await supabase
+                .from('users')
+                .select('company_id')
+                .eq('id', newUser.id)
+                .single();
+              
+              setUser(userData ? { ...newUser, company_id: userData.company_id } : newUser);
+            } else {
+              setUser(null);
+            }
             setSession(newSession);
-            setUser(newUser);
             
             if (newUser) {
               await checkSubscription(newUser.id);
@@ -119,7 +138,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           }
         );
 
-        // Only set loading to false after everything is initialized
         if (mounted) setIsLoading(false);
         
         return () => {
@@ -263,4 +281,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const useAuth = () => useContext(AuthContext); 
+export const useAuth = () => useContext(AuthContext);
