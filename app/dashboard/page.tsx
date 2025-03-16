@@ -2,7 +2,15 @@
 
 import { useDashboard } from './hooks/useDashboard';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
+interface Project {
+  id: string;
+  name: string;
+  description: string;
+  start_date: string;
+  end_date: string;
+}
 
 const AUTH_TIMEOUT = 15000; // 15 seconds
 
@@ -18,9 +26,6 @@ export default function Dashboard() {
     setActiveTab,
     projects,
     employees,
-    handleProjectAdded,
-    handleEmployeeAdded,
-    // Add these missing imports
     isEmployeeModalOpen,
     setIsEmployeeModalOpen,
     isProjectModalOpen,
@@ -34,6 +39,9 @@ export default function Dashboard() {
     handleAddProject,
     handleAddEmployee
   } = useDashboard();
+
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isDescriptionModalOpen, setIsDescriptionModalOpen] = useState(false);
 
   // Loading state
   if (!user && (isAuthLoading || isTrialLoading) && !hasCheckedSubscription) {
@@ -117,22 +125,35 @@ export default function Dashboard() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-white dark:bg-neutral-dark rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700"
+                  className="bg-white dark:bg-neutral-dark rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col h-[280px]"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div>
                       <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-1">
                         {project.name}
                       </h3>
-                      <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
-                        {project.description}
-                      </p>
+                      <div className="h-[60px] overflow-hidden relative">
+                        <p className="text-sm text-slate-600 dark:text-slate-400 mb-2 line-clamp-2">
+                          {project.description}
+                        </p>
+                        {project.description.length > 100 && (
+                          <button
+                            onClick={() => {
+                              setSelectedProject(project);
+                              setIsDescriptionModalOpen(true);
+                            }}
+                            className="text-xs text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 absolute bottom-0 left-0"
+                          >
+                            View more
+                          </button>
+                        )}
+                      </div>
                     </div>
                     <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
                       Active
                     </span>
                   </div>
-                  <div className="space-y-2 mb-4">
+                  <div className="space-y-2 mb-4 flex-grow">
                     <div className="flex items-center text-sm">
                       <span className="text-slate-500 dark:text-slate-400 w-20">
                         Start Date:
@@ -150,7 +171,7 @@ export default function Dashboard() {
                       </span>
                     </div>
                   </div>
-                  <button className="w-full bg-black hover:bg-zinc-800 text-white px-4 py-2 rounded-md text-sm transition-colors">
+                  <button className="w-full bg-black hover:bg-zinc-800 text-white px-4 py-2 rounded-md text-sm transition-colors mt-auto">
                     View Report
                   </button>
                 </motion.div>
@@ -381,6 +402,25 @@ export default function Dashboard() {
                 ) : (
                   'Add Project'
                 )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Description Modal */}
+      {selectedProject && isDescriptionModalOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-xl font-semibold mb-4">{selectedProject.name}</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
+              {selectedProject.description}
+            </p>
+            <div className="flex justify-end">
+              <button
+                onClick={() => setIsDescriptionModalOpen(false)}
+                className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+              >
+                Close
               </button>
             </div>
           </div>
