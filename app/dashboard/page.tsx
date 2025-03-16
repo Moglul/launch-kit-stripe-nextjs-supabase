@@ -2,6 +2,7 @@
 
 import { useDashboard } from './hooks/useDashboard';
 import { motion } from 'framer-motion';
+import { set } from 'lodash';
 import { useState } from 'react';
 
 interface Project {
@@ -37,7 +38,15 @@ export default function Dashboard() {
     newProject,
     setNewProject,
     handleAddProject,
-    handleAddEmployee
+    handleAddEmployee,
+    handleDeleteProject,
+    isProjectMenuOpen,
+    setIsProjectMenuOpen,
+    isProjectEditModalOpen,
+    setIsProjectEditModalOpen,
+    editingProject,
+    setEditingProject,
+    handleEditProject
   } = useDashboard();
 
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -149,9 +158,22 @@ export default function Dashboard() {
                         )}
                       </div>
                     </div>
-                    <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
-                      Active
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                        Active
+                      </span>
+                      <button
+                        onClick={() => {
+                          setSelectedProject(project);
+                          setIsProjectMenuOpen(true);
+                        }}
+                        className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-slate-500" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                   <div className="space-y-2 mb-4 flex-grow">
                     <div className="flex items-center text-sm">
@@ -421,6 +443,133 @@ export default function Dashboard() {
                 className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
               >
                 Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {selectedProject && isProjectMenuOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-xl font-semibold mb-4">Project Options</h3>
+            <div className="space-y-4">
+              <button
+                onClick={() => {
+                  setEditingProject(selectedProject);
+                  setIsProjectEditModalOpen(true);
+                  setIsProjectMenuOpen(false);
+                }}
+                className="w-full text-left px-4 py-2 text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-700/50 rounded-lg transition-colors"
+              >
+                Edit Project
+              </button>
+              <button
+                onClick={() => {
+                  if (confirm('Are you sure you want to delete this project? This action cannot be undone.')) {
+                    handleDeleteProject(selectedProject.id);
+                    setIsProjectMenuOpen(false);
+                  }
+                }}
+                className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+              >
+                Delete Project
+              </button>
+            </div>
+            <div className="flex justify-end mt-6">
+              <button
+                onClick={() => setIsProjectMenuOpen(false)}
+                className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Project Edit Modal */}
+      {editingProject && isProjectEditModalOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-xl font-semibold mb-4">Edit Project</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Project Name
+                </label>
+                <input
+                  type="text"
+                  value={editingProject.name}
+                  onChange={(e) =>
+                    setEditingProject({ ...editingProject, name: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md"
+                  placeholder="Enter project name"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Description
+                </label>
+                <textarea
+                  value={editingProject.description}
+                  onChange={(e) =>
+                    setEditingProject({ ...editingProject, description: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md"
+                  placeholder="Enter project description"
+                  rows={3}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Start Date
+                </label>
+                <input
+                  type="date"
+                  value={editingProject.start_date}
+                  onChange={(e) =>
+                    setEditingProject({ ...editingProject, start_date: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  End Date
+                </label>
+                <input
+                  type="date"
+                  value={editingProject.end_date}
+                  onChange={(e) =>
+                    setEditingProject({ ...editingProject, end_date: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md"
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-4 mt-6">
+              <button
+                onClick={() => {
+                  setIsProjectEditModalOpen(false);
+                  setEditingProject(null);
+                }}
+                className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleEditProject}
+                disabled={isSubmitting}
+                className="bg-black hover:bg-zinc-800 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  'Save Changes'
+                )}
               </button>
             </div>
           </div>

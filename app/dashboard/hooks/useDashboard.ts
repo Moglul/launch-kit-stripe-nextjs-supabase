@@ -17,6 +17,7 @@ interface Employee {
 }
 
 interface Project {
+  id?: string;
   name: string;
   description: string;
   start_date: string;
@@ -52,6 +53,7 @@ export function useDashboard() {
     start_date: '',
     end_date: ''
   });
+  const [isProjectMenuOpen, setIsProjectMenuOpen] = useState(false);
 
   // Fetch data based on active tab
   useEffect(() => {
@@ -248,6 +250,76 @@ export function useDashboard() {
     }
   };
 
+  const handleDeleteProject = async (projectId: string) => {
+    try {
+      // First, delete all project_users associations
+      const { error: projectUserError } = await supabase
+        .from('project_users')
+        .delete()
+        .eq('project_id', projectId);
+
+      if (projectUserError) {
+        console.error('Error deleting project users:', projectUserError);
+        throw projectUserError;
+      }
+
+      // Then delete the project itself
+      const { error: projectError } = await supabase
+        .from('projects')
+        .delete()
+        .eq('id', projectId)
+        .single();
+
+      if (projectError) {
+        console.error('Error deleting project:', projectError);
+        throw projectError;
+      }
+
+      // Update local state only if both operations succeeded
+      setProjects(projects.filter(p => p.id !== projectId));
+      setIsProjectMenuOpen(false);
+    } catch (error) {
+      console.error('Error in delete operation:', error);
+      alert('Failed to delete project. Please try again.');
+    }
+  };
+
+  const [isProjectEditModalOpen, setIsProjectEditModalOpen] = useState(false);
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
+
+  const handleEditProject = async () => {
+    if (!editingProject) return;
+    setIsSubmitting(true);
+    try {
+      const { data: projectData, error: projectError } = await supabase
+        .from('projects')
+        .update({
+          name: editingProject.name,
+          description: editingProject.description,
+          start_date: editingProject.start_date,
+          end_date: editingProject.end_date
+        })
+        .eq('id', editingProject.id)
+        .select()
+        .single();
+
+      if (projectError) {
+        throw new Error(`Project update failed: ${projectError.message}`);
+      }
+
+      // Update the projects state
+      setProjects(projects.map(p => p.id === projectData.id ? projectData : p));
+      setIsProjectEditModalOpen(false);
+      setEditingProject(null);
+    } catch (error) {
+      console.error('Error updating project:', error);
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
+      alert(errorMessage);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return {
     user,
     isAuthLoading,
@@ -272,6 +344,14 @@ export function useDashboard() {
     newProject,
     setNewProject,
     handleAddProject,
-    handleAddEmployee
+    handleAddEmployee,
+    isProjectMenuOpen,
+    setIsProjectMenuOpen,
+    handleDeleteProject,
+    isProjectEditModalOpen,
+    setIsProjectEditModalOpen,
+    editingProject,
+    setEditingProject,
+    handleEditProject,
   };
 }
