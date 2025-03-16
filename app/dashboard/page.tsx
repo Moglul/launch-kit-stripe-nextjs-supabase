@@ -4,6 +4,7 @@ import { useDashboard } from './hooks/useDashboard';
 import { motion } from 'framer-motion';
 import { set } from 'lodash';
 import { useState } from 'react';
+import DashboardTopBar from './components/DashboardTopBar';
 
 interface Project {
   id: string;
@@ -71,22 +72,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0B1120]">
-      {/* Dashboard Header */}
-      <div className="bg-white dark:bg-neutral-dark border-b border-slate-200 dark:border-slate-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-              Dashboard
-            </h1>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-slate-600 dark:text-slate-300">
-                {isInTrial ? 'Trial Period' : 'Premium Plan'}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <DashboardTopBar />
       {/* Dashboard Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Tabs */}
