@@ -180,7 +180,9 @@ export default function Dashboard() {
                     </div>
                   </div>
                   <button className="w-full bg-black hover:bg-zinc-800 text-white px-4 py-2 rounded-md text-sm transition-colors mt-auto">
-                    View Report
+                    <a href={`/dashboard/project/${project.id}`} className="block w-full h-full">
+                      View Project
+                    </a>
                   </button>
                 </motion.div>
               ))}
