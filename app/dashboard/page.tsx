@@ -2,7 +2,6 @@
 
 import { useDashboard } from './hooks/useDashboard';
 import { motion } from 'framer-motion';
-import { set } from 'lodash';
 import { useState } from 'react';
 import DashboardTopBar from './components/DashboardTopBar';
 

@@ -5,6 +5,7 @@ import { FadeIn, StaggerContainer } from '../../components/ui/motion';
 import { ArrowRight, Mic, FileText } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent } from '../../components/ui/card';
+import Image from "next/image";
 
 const Hero = () => {
   return (
@@ -48,7 +49,7 @@ const Hero = () => {
               <Card className="overflow-hidden shadow-xl border border-zinc-100">
                 <CardContent className="p-0">
                   <div className="aspect-[4/3]">
-                    <img
+                    <Image
                       src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80"
                       alt="Construction worker using ReportGen"
                       className="w-full h-full object-cover"

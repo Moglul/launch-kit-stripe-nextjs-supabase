@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { FadeIn } from './ui/motion';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import Image from "next/image";
 
 const Testimonials = () => {
   const testimonials = [
@@ -60,7 +61,7 @@ const Testimonials = () => {
                 
                 <div className="flex items-center justify-center mb-6">
                   <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white mr-4">
-                    <img 
+                    <Image 
                       src={testimonials[currentIndex].avatar}
                       alt={testimonials[currentIndex].author}
                       className="w-full h-full object-cover"
