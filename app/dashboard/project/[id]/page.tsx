@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabase';
 import DashboardTopBar from '../../components/DashboardTopBar';
-import ReportCreateModal from '@/components/ReportCreateModal';
+import ReportCreateModal from './components/ReportCreateModal';
 
 interface Report {
   id: string;
