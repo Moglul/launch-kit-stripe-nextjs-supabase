@@ -33,12 +33,12 @@ const UserDropdown = () => {
       <DropdownMenuTrigger className="focus:outline-none">
         <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center">
           {user.user_metadata?.avatar_url ? (
-            <Image
-              src={user.user_metadata.avatar_url} 
-              alt="User avatar" 
-              className="h-8 w-8 rounded-full object-cover"
-            />
-          ) : (
+            <img 
+            src={user.user_metadata.avatar_url} 
+            alt="User avatar" 
+            className="h-8 w-8 rounded-full object-cover"
+          />
+        ) : (
             <User className="h-4 w-4 text-primary" />
           )}
         </div>

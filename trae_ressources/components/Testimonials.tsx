@@ -61,7 +61,7 @@ const Testimonials = () => {
                 
                 <div className="flex items-center justify-center mb-6">
                   <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white mr-4">
-                    <Image 
+                    <img 
                       src={testimonials[currentIndex].avatar}
                       alt={testimonials[currentIndex].author}
                       className="w-full h-full object-cover"
