@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { FadeIn, StaggerContainer } from './ui/motion';
-import { Clock, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Clock, Zap, CheckCircle } from 'lucide-react';
 
 const Problems = () => {
   return (
@@ -35,7 +35,7 @@ const Problems = () => {
           <FadeIn direction="up" delay={0.2}>
             <div className="bg-white rounded-xl p-8 shadow-lg border border-zinc-200 h-full">
               <div className="w-12 h-12 rounded-full bg-zinc-900 flex items-center justify-center mb-6">
-                <CheckCircle className="h-6 w-6 text-white" />
+                <Zap className="h-6 w-6 text-white" />
               </div>
               <h4 className="text-zinc-900 mb-3 font-semibold">Boost Accuracy</h4>
               <p className="text-zinc-500">
@@ -47,7 +47,7 @@ const Problems = () => {
           <FadeIn direction="up" delay={0.3}>
             <div className="bg-white rounded-xl p-8 shadow-lg border border-zinc-200 h-full">
               <div className="w-12 h-12 rounded-full bg-zinc-900 flex items-center justify-center mb-6">
-                <AlertTriangle className="h-6 w-6 text-white" />
+                <CheckCircle className="h-6 w-6 text-white" />
               </div>
               <h4 className="text-zinc-900 mb-3 font-semibold">Easy Review & Edit</h4>
               <p className="text-zinc-500">
