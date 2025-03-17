@@ -12,7 +12,6 @@ import {
 import { User, LogOut, Settings } from 'lucide-react';
 import { toast } from '@/components/use-toast';
 import { useRouter } from 'next/navigation';
-import Image from "next/image";
 
 const UserDropdown = () => {
   const { user, signOut } = useAuth();
