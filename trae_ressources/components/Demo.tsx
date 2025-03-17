@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { FadeIn } from './ui/motion';
 import { Play, Pause } from 'lucide-react';
+import Image from "next/image";
 
 const Demo = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -26,7 +27,7 @@ const Demo = () => {
         <FadeIn>
           <div className="relative rounded-xl overflow-hidden shadow-xl border border-white">
             <div className="aspect-video bg-construction-200 relative">
-              <img 
+              <Image
                 src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80"
                 alt="Demo video thumbnail"
                 className="w-full h-full object-cover"

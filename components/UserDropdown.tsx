@@ -12,6 +12,7 @@ import {
 import { User, LogOut, Settings } from 'lucide-react';
 import { toast } from '@/components/use-toast';
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
 
 const UserDropdown = () => {
   const { user, signOut } = useAuth();
@@ -32,7 +33,7 @@ const UserDropdown = () => {
       <DropdownMenuTrigger className="focus:outline-none">
         <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center">
           {user.user_metadata?.avatar_url ? (
-            <img 
+            <Image
               src={user.user_metadata.avatar_url} 
               alt="User avatar" 
               className="h-8 w-8 rounded-full object-cover"

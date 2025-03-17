@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { FadeIn, StaggerContainer } from '../../components/ui/motion';
-import { Mic, Globe, Smartphone, Cloud, Check } from 'lucide-react';
+import { Mic, Globe, Smartphone, Cloud} from 'lucide-react';
 import { Card, CardContent } from '../../components/ui/card';
 
 const Features = () => {
