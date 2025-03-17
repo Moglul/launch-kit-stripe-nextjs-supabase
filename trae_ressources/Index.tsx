@@ -2,9 +2,9 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Hero from '@/trae_ressources/components/Hero';
-import Problem from '@/components/Problems';
+import Problem from '@/app/components/Problems';
 import HowItWorks from '@/trae_ressources/components/HowItWorks';
-import Features from '@/components/Features';
+import Features from '@/app/components/Features';
 import Pricing from '@/trae_ressources/components/Pricing';
 import FAQ from '@/trae_ressources/components/FAQ';
 import Footer from '@/trae_ressources/components/Footer';

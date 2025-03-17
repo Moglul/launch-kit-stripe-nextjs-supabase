@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { FadeIn } from './ui/motion';
+import { FadeIn } from '../../components/ui/motion';
 import { Check } from 'lucide-react';
 
 const Pricing = () => {

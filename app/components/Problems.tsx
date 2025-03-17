@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { FadeIn, StaggerContainer } from './ui/motion';
+import { FadeIn, StaggerContainer } from '../../components/ui/motion';
 import { Clock, Zap, CheckCircle } from 'lucide-react';
 
 const Problems = () => {

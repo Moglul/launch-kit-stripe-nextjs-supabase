@@ -1,10 +1,10 @@
 "use client";
 
 import React from 'react';
-import { FadeIn, StaggerContainer } from './ui/motion';
+import { FadeIn, StaggerContainer } from '../../components/ui/motion';
 import { ArrowRight, Mic, FileText } from 'lucide-react';
-import { Button } from './ui/button';
-import { Card, CardContent } from './ui/card';
+import { Button } from '../../components/ui/button';
+import { Card, CardContent } from '../../components/ui/card';
 
 const Hero = () => {
   return (

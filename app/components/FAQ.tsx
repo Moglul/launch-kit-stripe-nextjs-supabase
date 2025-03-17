@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { FadeIn } from './ui/motion';
+import { FadeIn } from '../../components/ui/motion';
 import { ChevronDown } from 'lucide-react';
 
 const FAQ = () => {

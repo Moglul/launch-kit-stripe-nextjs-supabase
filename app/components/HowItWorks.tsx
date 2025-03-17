@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { FadeIn, StaggerContainer } from './ui/motion';
+import { FadeIn, StaggerContainer } from '../../components/ui/motion';
 import { Mic, FileText, CheckSquare } from 'lucide-react';
 
 const HowItWorks = () => {
