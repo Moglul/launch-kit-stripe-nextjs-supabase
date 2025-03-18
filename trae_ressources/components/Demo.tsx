@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { FadeIn } from './ui/motion';
 import { Play, Pause } from 'lucide-react';
-import Image from "next/image";
+
 
 const Demo = () => {
   const [isPlaying, setIsPlaying] = useState(false);
