@@ -20,11 +20,6 @@ interface Report {
     quantityRemaining: string;
     remarks: string;
   }[];
-  workforce: {
-    totalPresent: string;
-    hoursWorked: string;
-    absentees: string;
-  };
 }
 
 export default function ProjectDetails() {
