@@ -6,10 +6,14 @@ interface TabNavigationProps {
 }
 
 const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, setActiveTab}) => {
+  const handleTabClick = (tab: 'report' | 'edit' | 'generate') => {
+    setActiveTab(tab);
+    window.scrollTo(0, window.scrollY);
+  };
   return (
     <div className="flex space-x-4 mb-2 border-b border-slate-200 dark:border-slate-700">
       <button
-        onClick={() => setActiveTab('report')}
+        onClick={() => handleTabClick('report')}
         className={`px-4 py-2 text-sm font-medium ${
           activeTab === 'report'
             ? 'text-slate-900 dark:text-white border-b-2 border-black'
@@ -20,7 +24,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, setActiveTab})
       </button>
       {(
         <button
-          onClick={() => setActiveTab('edit')}
+          onClick={() => handleTabClick('edit')}
           className={`px-4 py-2 text-sm font-medium ${
             activeTab === 'edit'
               ? 'text-slate-900 dark:text-white border-b-2 border-black'
@@ -31,7 +35,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, setActiveTab})
         </button>
       )}
       <button
-        onClick={() => setActiveTab('generate')}
+        onClick={() => handleTabClick('generate')}
         className={`px-4 py-2 text-sm font-medium ${
           activeTab === 'generate'
             ? 'text-slate-900 dark:text-white border-b-2 border-black'

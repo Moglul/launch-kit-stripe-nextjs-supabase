@@ -14,7 +14,6 @@ export default function ReportPage() {
   const {
     report,
     project,
-    employees,
     loading,
     error,
     activeTab,
@@ -22,10 +21,6 @@ export default function ReportPage() {
     editedReport,
     isSaving,
     handleInputChange,
-    handleMaterialChange,
-    addMaterialRow,
-    handleEquipmentChange,
-    addEquipmentRow,
     handleSaveReport
   } = useReport();
 
@@ -76,17 +71,13 @@ export default function ReportPage() {
         {/* Tab Content */}
         <div className="bg-white dark:bg-neutral-dark rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
           {activeTab === 'report' ? (
-            <ReportView report={report} employees={employees} />
+            <ReportView report={report} />
           ) : activeTab === 'edit' ? (
             <ReportEdit
               editedReport={editedReport}
               isSaving={isSaving}
               onSave={handleSaveReport}
               handleInputChange={handleInputChange}
-              handleMaterialChange={handleMaterialChange}
-              addMaterialRow={addMaterialRow}
-              handleEquipmentChange={handleEquipmentChange}
-              addEquipmentRow={addEquipmentRow}
             />
           ) : activeTab === 'generate' ? (
             <ReportGenerate />

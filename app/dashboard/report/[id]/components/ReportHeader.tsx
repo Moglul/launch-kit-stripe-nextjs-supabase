@@ -13,8 +13,7 @@ interface ReportHeaderProps {
 const ReportHeader: React.FC<ReportHeaderProps> = ({
   report,
   project,
-  userEmail,
-  activeTab
+  userEmail
 }) => {
   return (
     <>

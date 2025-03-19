@@ -4,14 +4,13 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { supabase } from '@/utils/supabase';
 import { useAuth } from '@/contexts/AuthContext';
-import { Report, Project, Employee } from '../types';
+import { Report, Project } from '../types';
 
 export const useReportData = () => {
   const { id } = useParams();
   const { user } = useAuth();
   const [report, setReport] = useState<Report | null>(null);
   const [project, setProject] = useState<Project | null>(null);
-  const [employees, setEmployees] = useState<Employee[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -44,9 +43,6 @@ export const useReportData = () => {
             .from('employees')
             .select('*')
             .eq('company_id', user?.company_id);
-
-          if (employeesError) throw employeesError;
-          setEmployees(employeesData || []);
         }
 
         setLoading(false);
@@ -66,8 +62,6 @@ export const useReportData = () => {
     report,
     setReport,
     project,
-    employees,
-    setEmployees,
     loading,
     error,
     setError
